@@ -7,6 +7,29 @@ interface Message {
   isUser: boolean
 }
 
+const quickQuestions: { question: string; answer: string }[] = [
+  {
+    question: 'What is SkillBridge AI?',
+    answer: 'SkillBridge AI is an AI-powered career guidance platform that helps students identify skill gaps, generate personalized learning roadmaps, receive project recommendations, and prepare for interviews based on their career goals.',
+  },
+  {
+    question: 'How does SkillBridge AI create my roadmap?',
+    answer: 'SkillBridge AI analyzes your education, current skills, experience, and career goals using AI. It then generates a personalized step-by-step roadmap with recommended technologies, projects, certifications, and interview preparation tailored to your profile.',
+  },
+  {
+    question: 'What features does SkillBridge AI provide?',
+    answer: 'SkillBridge AI provides personalized career roadmaps, skill gap analysis, project recommendations, interview preparation guidance, career summaries, progress visualization through charts, and AI-powered career assistance.',
+  },
+  {
+    question: 'Who can use SkillBridge AI?',
+    answer: 'SkillBridge AI is designed for students, fresh graduates, job seekers, and anyone looking to build technical skills, switch careers, or prepare for software and AI-related roles.',
+  },
+  {
+    question: 'How can SkillBridge AI help me get a job?',
+    answer: 'SkillBridge AI helps you identify missing skills, suggests a structured learning path, recommends practical projects, improves interview readiness, and guides you toward becoming industry-ready for your target role.',
+  },
+]
+
 const faqs: { question: string; answer: string }[] = [
   {
     question: 'What is SkillBridge AI?',
@@ -81,6 +104,13 @@ export default function AIAssistant() {
         setTimeout(() => setShowSuggestions(true), 500)
       }, 400)
     }
+  }
+
+  const handleQuickQuestionClick = (q: { question: string; answer: string }) => {
+    addMessage(q.question, true)
+    setTimeout(() => {
+      addMessage(q.answer, false)
+    }, 300)
   }
 
   return (
@@ -181,10 +211,25 @@ export default function AIAssistant() {
                 <div ref={messagesEndRef} />
               </div>
 
-              <div className="border-t border-gray-100 bg-gray-50/50 p-3 dark:border-gray-700 dark:bg-gray-800/50">
-                <p className="text-center text-[11px] text-gray-400 dark:text-gray-500">
-                  Ask me anything about SkillBridge AI
-                </p>
+              <div className="border-t border-gray-100 bg-gray-50/50 dark:border-gray-700 dark:bg-gray-800/50">
+                <div className="flex gap-2 overflow-x-auto px-4 py-3 scrollbar-thin">
+                  {quickQuestions.map((q) => (
+                    <motion.button
+                      key={q.question}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => handleQuickQuestionClick(q)}
+                      className="shrink-0 rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs font-medium text-gray-600 shadow-sm transition-all hover:border-brand-200 hover:bg-brand-50 hover:text-brand-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-brand-800 dark:hover:bg-brand-950/50 dark:hover:text-brand-300"
+                    >
+                      {q.question}
+                    </motion.button>
+                  ))}
+                </div>
+                <div className="border-t border-gray-100 px-4 py-2.5 dark:border-gray-700">
+                  <p className="text-center text-[11px] text-gray-400 dark:text-gray-500">
+                    Ask me anything about SkillBridge AI
+                  </p>
+                </div>
               </div>
             </motion.div>
           </>
