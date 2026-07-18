@@ -9,6 +9,9 @@ import RoadmapTimeline from '../components/RoadmapTimeline'
 import RecommendedProjects from '../components/RecommendedProjects'
 import InterviewTips from '../components/InterviewTips'
 import ActionButtons from '../components/ActionButtons'
+import StatsCards from '../components/StatsCards'
+import { DashboardSkeleton } from '../components/SkeletonLoader'
+import EmptyState from '../components/EmptyState'
 
 const containerVariants = {
   hidden: {},
@@ -24,42 +27,64 @@ export default function DashboardPage() {
   })
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center py-24">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-brand-200 border-t-brand-600" />
-      </div>
-    )
-  }
-
-  if (!hasRoadmap) {
-    return (
-      <div className="flex flex-col items-center justify-center py-24 text-center">
-        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100">
-          <svg className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-            <path d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-          </svg>
-        </div>
-        <h2 className="mt-4 text-xl font-semibold text-gray-900">No Roadmap Found</h2>
-        <p className="mt-2 max-w-sm text-sm text-gray-500">
-          Generate your AI-powered career roadmap from your profile page to see your personalized dashboard here.
-        </p>
-      </div>
-    )
+    return <DashboardSkeleton />
   }
 
   const displayName = profile?.fullName || userData?.name || 'there'
+
+  if (!hasRoadmap) {
+    return (
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <WelcomeCard
+          name={displayName}
+          careerGoal={userData?.careerGoal || ''}
+        />
+        <div className="mt-6">
+          <StatsCards
+            roadmap={null}
+            profileProgress={profileProgress}
+            hasRoadmap={false}
+          />
+        </div>
+        <EmptyState
+          icon={
+            <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+          }
+          title="No Roadmap Found"
+          description="Generate your AI-powered career roadmap from your profile page to see your personalized dashboard here."
+          action={{
+            label: 'Go to Profile',
+            onClick: () => window.location.href = '/profile',
+          }}
+        />
+      </motion.div>
+    )
+  }
 
   return (
     <motion.div
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="pb-12"
     >
       <div className="mb-6">
         <WelcomeCard
           name={displayName}
           careerGoal={userData?.careerGoal || ''}
+        />
+      </div>
+
+      <div className="mb-6">
+        <StatsCards
+          roadmap={roadmap}
+          profileProgress={profileProgress}
+          hasRoadmap={true}
         />
       </div>
 

@@ -5,12 +5,14 @@ interface RecommendedProjectsProps {
 }
 
 const PROJECT_COLORS = [
-  { bg: 'bg-blue-50 dark:bg-blue-950/40', text: 'text-blue-700 dark:text-blue-300', dot: 'bg-blue-500' },
-  { bg: 'bg-violet-50 dark:bg-violet-950/40', text: 'text-violet-700 dark:text-violet-300', dot: 'bg-violet-500' },
-  { bg: 'bg-emerald-50 dark:bg-emerald-950/40', text: 'text-emerald-700 dark:text-emerald-300', dot: 'bg-emerald-500' },
-  { bg: 'bg-amber-50 dark:bg-amber-950/40', text: 'text-amber-700 dark:text-amber-300', dot: 'bg-amber-500' },
-  { bg: 'bg-rose-50 dark:bg-rose-950/40', text: 'text-rose-700 dark:text-rose-300', dot: 'bg-rose-500' },
+  { bg: 'bg-blue-50 dark:bg-blue-950/40', text: 'text-blue-700 dark:text-blue-300', dot: 'bg-blue-500', tag: 'Web' },
+  { bg: 'bg-violet-50 dark:bg-violet-950/40', text: 'text-violet-700 dark:text-violet-300', dot: 'bg-violet-500', tag: 'AI/ML' },
+  { bg: 'bg-emerald-50 dark:bg-emerald-950/40', text: 'text-emerald-700 dark:text-emerald-300', dot: 'bg-emerald-500', tag: 'API' },
+  { bg: 'bg-amber-50 dark:bg-amber-950/40', text: 'text-amber-700 dark:text-amber-300', dot: 'bg-amber-500', tag: 'Full Stack' },
+  { bg: 'bg-rose-50 dark:bg-rose-950/40', text: 'text-rose-700 dark:text-rose-300', dot: 'bg-rose-500', tag: 'Mobile' },
 ]
+
+const PROJECT_TAGS = ['Web', 'AI/ML', 'API', 'Full Stack', 'Mobile', 'DevOps', 'Data', 'Cloud']
 
 export default function RecommendedProjects({ projects }: RecommendedProjectsProps) {
   if (!projects || projects.length === 0) return null
@@ -32,21 +34,33 @@ export default function RecommendedProjects({ projects }: RecommendedProjectsPro
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Recommended Projects</h2>
           <p className="text-sm text-gray-500 dark:text-gray-400">Build these to strengthen your portfolio</p>
         </div>
+        {projects.length > 0 && (
+          <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-700 dark:bg-blue-900/40 dark:text-blue-400">
+            {projects.length} projects
+          </span>
+        )}
       </div>
 
       <div className="mt-4 space-y-3">
         {projects.map((project, i) => {
           const color = PROJECT_COLORS[i % PROJECT_COLORS.length]
+          const tag = PROJECT_TAGS[i % PROJECT_TAGS.length]
           return (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
+              whileHover={{ x: 4, transition: { duration: 0.15 } }}
               transition={{ delay: 0.35 + i * 0.06, duration: 0.3 }}
-              className={`flex items-start gap-3 rounded-xl ${color.bg} p-4`}
+              className={`flex items-start gap-3 rounded-xl ${color.bg} p-4 transition-all duration-200 hover:shadow-sm`}
             >
               <div className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${color.dot}`} />
-              <p className={`text-sm leading-relaxed ${color.text}`}>{project}</p>
+              <div className="flex-1">
+                <p className={`text-sm leading-relaxed ${color.text}`}>{project}</p>
+              </div>
+              <span className="shrink-0 rounded-md bg-white/60 px-2 py-0.5 text-[10px] font-medium text-gray-500 shadow-sm dark:bg-gray-800/60 dark:text-gray-400">
+                {tag}
+              </span>
             </motion.div>
           )
         })}

@@ -32,10 +32,11 @@ export default function InterviewTips({ tips }: InterviewTipsProps) {
             key={i}
             initial={{ opacity: 0, x: -8 }}
             animate={{ opacity: 1, x: 0 }}
+            whileHover={{ x: 4, transition: { duration: 0.15 } }}
             transition={{ delay: 0.4 + i * 0.06, duration: 0.3 }}
-            className="flex items-start gap-3"
+            className="group flex items-start gap-3 rounded-xl p-2 transition-all duration-200 hover:bg-purple-50/50 dark:hover:bg-purple-950/20"
           >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-purple-100 text-[11px] font-bold text-purple-700 dark:bg-purple-900/50 dark:text-purple-300">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-purple-100 text-[11px] font-bold text-purple-700 transition-all duration-200 group-hover:bg-purple-200 group-hover:shadow-sm dark:bg-purple-900/50 dark:text-purple-300 dark:group-hover:bg-purple-800/50">
               {i + 1}
             </span>
             <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">{tip}</p>

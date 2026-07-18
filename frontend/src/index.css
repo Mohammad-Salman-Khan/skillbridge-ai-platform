@@ -62,6 +62,14 @@
     @apply border-gray-800 bg-gray-900 shadow-gray-900/50;
   }
 
+  .card-hover-alt {
+    @apply transition-all duration-300 hover:shadow-lg hover:shadow-brand-100/10 hover:-translate-y-0.5;
+  }
+
+  .dark .card-hover-alt {
+    @apply hover:shadow-brand-900/20;
+  }
+
   .glass {
     @apply bg-white/80 backdrop-blur-xl;
   }
@@ -73,9 +81,23 @@
   .focus-ring {
     @apply focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950;
   }
-}
 
-@layer utilities {
+  .stat-card {
+    @apply relative overflow-hidden rounded-2xl border bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-md;
+  }
+
+  .dark .stat-card {
+    @apply border-gray-800 bg-gray-900;
+  }
+
+  .skeleton {
+    @apply animate-pulse rounded-lg bg-gray-200 dark:bg-gray-800;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
   .scrollbar-thin {
     scrollbar-width: thin;
     scrollbar-color: theme('colors.gray.200') transparent;
@@ -84,4 +106,18 @@
   .dark .scrollbar-thin {
     scrollbar-color: theme('colors.gray.700') transparent;
   }
+
+  .chat-bubble-user {
+    @apply ml-auto max-w-[85%] rounded-2xl rounded-br-sm bg-brand-600 px-4 py-2.5 text-sm text-white shadow-sm;
+  }
+
+  .chat-bubble-ai {
+    @apply mr-auto max-w-[85%] rounded-2xl rounded-bl-sm border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200;
+  }
+
+  .dark .chat-bubble-ai {
+    @apply border-gray-700 bg-gray-800 text-gray-200;
+  }
 }
+
+
