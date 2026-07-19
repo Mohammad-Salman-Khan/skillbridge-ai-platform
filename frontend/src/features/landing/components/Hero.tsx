@@ -1,5 +1,7 @@
+import { useState } from "react"
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
+import VideoModal from "./VideoModal"
 
 function HeroIllustration() {
   return (
@@ -49,6 +51,8 @@ function HeroIllustration() {
 }
 
 export default function Hero() {
+  const [isVideoOpen, setIsVideoOpen] = useState(false)
+
   return (
     <section className="relative min-h-screen overflow-hidden pt-28 sm:pt-32 lg:pt-36 dark:bg-gray-950">
       <div className="section-container">
@@ -99,7 +103,7 @@ export default function Hero() {
                   <path d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </Link>
-              <button className="inline-flex h-12 items-center justify-center rounded-xl border border-gray-300 bg-white px-8 text-sm font-medium text-gray-700 hover:bg-gray-50 active:scale-[0.98] transition-all dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+              <button onClick={() => setIsVideoOpen(true)} className="inline-flex h-12 items-center justify-center rounded-xl border border-gray-300 bg-white px-8 text-sm font-medium text-gray-700 hover:bg-gray-50 active:scale-[0.98] transition-all dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
                 <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                   <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -147,6 +151,7 @@ export default function Hero() {
       </div>
 
       <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none dark:from-gray-950" />
+      <VideoModal isOpen={isVideoOpen} onClose={() => setIsVideoOpen(false)} />
     </section>
   )
 }
